@@ -1,7 +1,12 @@
-function [x, y] = coordTransform(i, j, R, N, M)
-    x = j + floor(N/2);
-    y = -i + floor(M/2);
-    uv = floor(R'*[x;y]);
-    x = uv(1) - floor(N/2);
-    y = floor(M/2) - uv(2);
+function [x,y] = coordTransform(i, j, R, X, Y)
+    T1 = [1 0 X/2;...
+          0 1 Y/2;...
+          0 0 1];
+    T2= [1 0 -X/2;...
+         0 1 -Y/2;...
+         0 0 1];
+
+    oldPixelPos = T1*R*T2*[i;j;1];
+    x = floor(oldPixelPos(1));
+    y = floor(oldPixelPos(2));
 end
