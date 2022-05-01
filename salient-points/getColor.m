@@ -1,4 +1,4 @@
-function color = getColor(img, x, y, X, Y)
+function color = getColor(img, x, y, X, Y, greyOrRGB, rotateMode)
 %GETCOLOR Summary of this function goes here
 %   Detailed explanation goes here
     xy = [x+1 y+1 ;...
@@ -7,6 +7,22 @@ function color = getColor(img, x, y, X, Y)
           x-1 y-1 ];%pixel neighbours
               
     color = [];
+    
+    if nargin == 6
+        for i = 1:4
+            if xy(i,1) >= 1 && xy(i,1) <= X && xy(i,2) >= 1 && xy(i,2) <= Y 
+                color = [color; img(xy(i,1), xy(i,2))];
+            end
+        end
+        color = floor(mean(color));
+        if isnan(color)
+            color = [];
+        end
+        return
+    end 
+    
+    color = [];
+    
     for i = 1:4
         if xy(i,1) >= 1 && xy(i,1) < X && xy(i,2) >= 1 && xy(i,2) < Y 
             color = [color;[img(xy(i,1), xy(i,2), 1) ...
@@ -14,6 +30,17 @@ function color = getColor(img, x, y, X, Y)
                             img(xy(i,1), xy(i,2), 3)]];
         end
     end
-    color = mean(color);
+    
+    if nargin == 7
+        color = mean(color);
+    else
+        color = mean(color, 2);
+    end
+    
+    if isnan(color)
+        color = [];
+    end
+    
+       
 end
 

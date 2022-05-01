@@ -8,21 +8,25 @@ function rotImg = myImgRotation(img, angle)
         return
     end
     
-    img = imagePad(img, angle); %Image zero-padding
+    %Find the needed image size for the rotation and create new image
     [X, Y, ~] = size(img); % X for rows, Y for columns
-    R = [cosd(angle) sind(angle) 0; ...
-        -sind(angle) cosd(angle) 0; ...
-        0 0 1];
-    rotImg = uint8(zeros(X, Y, 3));
-    for i = 1:X
-        for j = 1:Y
-            [x,y] = coordTransform(i, j, R, X, Y);
+    R_pad = [cosd(angle) sind(angle); ...
+             sind(angle) cosd(angle)];
+    padSize = abs(R_pad)*[X;Y];
+    rotImg = uint8(zeros(floor(padSize(1)), floor(padSize(2)), 3));
+    [newX, newY, ~] = size(rotImg);
+    
+    %Start Coloring
+    for i = 1:newX
+        for j = 1:newY
+            [x,y] = coordTransform(i, j, angle, newX, newY, X, Y);
             if y < 1 || y > Y || x < 1 || x > X  
                 continue
             else
-                rotImg(i, j,:) = getColor(img, x, y, X, Y);
+                rotImg(i, j,:) = getColor(img, x, y, X, Y, 'RGB', 'Rotate');
             end
         end
     end
+    
 end
 
