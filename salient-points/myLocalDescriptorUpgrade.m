@@ -1,6 +1,5 @@
 function d = myLocalDescriptorUpgrade(I,p,rhom,rhoM,rhostep ,N)
-%MYLOCALDESCRIPTOR Summary of this function goes here
-%   Detailed explanation goes here
+%MYLOCALDESCRIPTOR same as local descriptor: Can describe RGB images
     [X, Y, ~] = size(I);
     d = [];
     for r = rhom:rhostep:rhoM
@@ -16,7 +15,14 @@ function d = myLocalDescriptorUpgrade(I,p,rhom,rhoM,rhostep ,N)
             d = [d; mean(x_rho)];
         end
     end
-    
-    
 end
+function [x, y] = getRealPos(p, theta, rho)
+%GETREALPOS Summary of this function goes here
+%   Detailed explanation goes here
+    [x,y] = pol2cart(theta, rho);
+    x = floor(x + p(1));
+    y = floor(y + p(2));
+end
+
+
 

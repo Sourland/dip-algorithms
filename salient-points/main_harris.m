@@ -1,27 +1,23 @@
 close all;clc;clear;
+
 I_RGB = imread('TestIm1.png');
-img = rgb2gray(I_RGB);
+I_RGB = myImgRotation(I_RGB, 360);
+corners = myDetectHarrisFeatures(I_RGB);
 
-% [dx, dy] = meshgrid(-1:1, -1:1); %gradient masks
-dx=[-1 0 1];
-dy = dx';
-
-Ix = conv2(double(img), dx, 'same');
-Iy = conv2(double(img), dy, 'same');
-
-sigma = 2;
-
-h = fspecial('gaussian', 9, sigma); %gaussian filter
-
-Ix2 = conv2(double(Ix.^2), h, 'same');
-Iy2 = conv2(double(Iy.^2), h, 'same');
-IxIy = conv2(double(Ix.*Iy), h, 'same');
-
- 
-
-R = (Ix2.*Iy2 - IxIy.^2) ./ (Ix2+Iy2);
-
-
+pos = corners.Location;
+[X,Y,~] = size(I_RGB); 
+ for i = 1:length(pos)
+    x = pos(i,1);
+    y = pos(i,2);
+    if x-2 > 0 && y-2 > 0 && x+2 <= X && y+2 <=Y
+        for q = x-2:x+2
+            for r = y-2:y+2
+                I_RGB(q, r, :) = [255 0 0];
+            end
+        end
+    end
+ end
+imwrite(I_RGB, 'SALIENT.png');
 
 
 

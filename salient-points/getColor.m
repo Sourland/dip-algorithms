@@ -1,6 +1,9 @@
 function color = getColor(img, x, y, X, Y, greyOrRGB, rotateMode)
-%GETCOLOR Summary of this function goes here
-%   Detailed explanation goes here
+%GETCOLOR Get color of a pixel using its neighbours
+%   @param img the image to source the color
+%   @param x, y the coordinates of the pixel
+%   @param X, Y the size of the image
+%   @param greyOrRGB, rotateMode the mode of operation
     xy = [x+1 y+1 ;...
           x+1 y-1 ;...
           x-1 y+1 ;...
