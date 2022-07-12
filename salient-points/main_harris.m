@@ -1,5 +1,5 @@
 close all;clc;clear;
-
+addpath('src');
 I_RGB = imread('TestIm1.png');
 I_RGB = myImgRotation(I_RGB, 360);
 corners = myDetectHarrisFeatures(I_RGB);

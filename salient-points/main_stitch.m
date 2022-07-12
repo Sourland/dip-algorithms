@@ -1,4 +1,5 @@
 clear;clc;close all;
+addpath('src');
 Image1 = imread('TestIm1.png');
 Image1 = myImgRotation(Image1, 360);
 Image2 = imread('TestIm2.png');

@@ -1,4 +1,5 @@
 clear;clc;close all
+addpath('src');
 I = imread('TestIm1.png');
 I_GREYSCALE = rgb2gray(I);
 p = [100, 100];

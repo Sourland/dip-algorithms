@@ -1,5 +1,5 @@
 clear;clc;close all
-
+addpath('src');
 img = imread('TestIm1.png');
 
 angle1 = 15;
